@@ -20,6 +20,8 @@ $(document).ready(function() {
         
         return false;
     });
+    
+    uuidChecker.checkValid();
 });
 
 uuidChecker = {
@@ -43,6 +45,11 @@ uuidChecker = {
     },
     
     getNameAjax: function(name) {
+            $('#uuid').text("Retrieving...");
+            $('#name').text("");
+            $('#legacy').text("");
+            $('#demo').text("");
+        
         $.ajax({
             url: "ping.php",
             data: {
