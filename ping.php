@@ -3,7 +3,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if (!isset($_POST['name']) || preg_match("/^[a-zA-Z0-9_]{1,16}$/", $_POST['name']) != 1) {
-    echo "Failed on name match.";
     header("HTTP/1.1 400 Bad Request");
     die();
 }
@@ -30,7 +29,6 @@ if (strpos($http_status, '200') === false) {
         header("HTTP/1.1 500 Internal Server Error");
     }
     
-    echo "Got " . $http_status;
     die();
 }
 
