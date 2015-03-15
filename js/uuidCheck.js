@@ -1,10 +1,14 @@
 /* 
  * Minecraft Javascript UUID -> Name check script.
  * 
- * (c) Dr Daniel Naylor, 2014. Licenced under the MIT License.
+ * (c) Dr Daniel Naylor, 2014-2015. Licenced under the MIT License.
  */
 
 $(document).ready(function() {
+    String.prototype.splice = function( idx, rem, s ) {
+        return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
+    };
+    
     $('#minecraftName').change(function() {
         uuidChecker.checkValid();
     });
@@ -39,6 +43,14 @@ uuidChecker = {
         }
     },
     
+    insertDashes: function(uuid) {
+        uuid = uuid.splice(20, 0, "-");
+        uuid = uuid.splice(16, 0, "-");
+        uuid = uuid.splice(12, 0, "-");
+        uuid = uuid.splice(8, 0, "-");
+        return uuid;
+    },
+    
     createName: function() {
         var name = $('#minecraftName').val();
         uuidChecker.getNameAjax(name);
@@ -60,7 +72,7 @@ uuidChecker = {
         }).done(function(data) {
             if (data.length !== 0) {
                 var msg = data[0];
-                $('#uuid').text(msg.id);
+                $('#uuid').text(uuidChecker.insertDashes(msg.id));
                 $('#name').text(msg.name);
                 
                 if (msg.hasOwnProperty('legacy') && msg.legacy) {
